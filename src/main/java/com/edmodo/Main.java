@@ -1,5 +1,6 @@
 package com.edmodo;
 
+import com.edmodo.modelController.UserRec;
 import com.edmodo.viewController.ObjController;
 import com.edmodo.util.HibernateUtil;
 import javafx.application.Application;
@@ -55,6 +56,10 @@ public class Main extends Application {
 
     public void showRegistrationForm() {
         prepareToShow("/view/RegistrationView.fxml");
+    }
+
+    public void showTradeForm() {
+        prepareToShow("/view/TradeView.fxml");
     }
 
     public static void main(String[] args) {

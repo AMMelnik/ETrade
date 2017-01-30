@@ -1,5 +1,6 @@
 package com.edmodo.modelController;
 
+import com.edmodo.model.Item;
 import com.edmodo.model.User;
 import com.edmodo.util.HibernateUtil;
 import org.hibernate.Session;
@@ -41,10 +42,28 @@ public class RecordAbstact implements Recordable {
     }
 
     @Override
-    public void updateContact(User user) {
+    public void updateRecord(User user) {
         Session s = HibernateUtil.openSession();
         s.beginTransaction();
         s.update(user);
+        s.getTransaction().commit();
+        s.close();
+    }
+
+    @Override
+    public void addRecord(Item item) {
+        Session s = HibernateUtil.openSession();
+        s.beginTransaction();
+        s.save(item);
+        s.getTransaction().commit();
+        s.close();
+    }
+
+    @Override
+    public void updateRecord(Item item) {
+        Session s = HibernateUtil.openSession();
+        s.beginTransaction();
+        s.update(item);
         s.getTransaction().commit();
         s.close();
     }

@@ -1,5 +1,6 @@
 package com.edmodo.modelController;
 
+import com.edmodo.model.Item;
 import com.edmodo.model.User;
 
 import java.util.List;
@@ -13,5 +14,9 @@ public interface Recordable {
     //List<Contact> listContact();
     void removeRecord(Integer id);
 
-    void updateContact(User user);
+    void updateRecord(User user);
+
+    void addRecord(Item item);
+
+    void updateRecord(Item item);
 }

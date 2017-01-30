@@ -1,5 +1,6 @@
 package com.edmodo.viewController;
 
+import com.edmodo.model.User;
 import com.edmodo.modelController.UserRec;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,7 +24,8 @@ public class AccessContr extends ObjController {
     @FXML
     private Label accessInfo;
 
-  //  UserDAOImpl userDI;
+    private UserRec userRec;
+    public static User user;
 
     public AccessContr() {
         super();
@@ -37,15 +39,18 @@ public class AccessContr extends ObjController {
 
     @FXML
     private void clickEntryBtn() {
-
-       /* String nick = login.getText();
-        String pass = password.getText();
-        if (nick.equals("") && pass.equals("")) {
+        accessInfo.setText("");
+        userRec = new UserRec();
+        if (login.getText().equals("") || password.getText().equals("")) {
             accessInfo.setText("Введите логин и пароль для доступа");
         } else {
-            userDI.listUser.(nick, pass);
-            super.getMain().showWarriorsWindow();
-        }*/
+            user = userRec.checkAccount(login.getText(), password.getText());
+            if (user == null) {
+                accessInfo.setText("Некорректный email или пароль");
+            } else {
+                super.getMain().showTradeForm();
+            }
+        }
     }
 
     @FXML

@@ -21,28 +21,32 @@ public class UserRec extends RecordAbstact {
 
     }
 
-    public boolean checkEmail(String emailToCheck) {
+    public int checkEmail(String emailToCheck) {
         System.out.println("\nЧтение записей таблицы");
         String q = "SELECT u FROM " + User.class.getSimpleName() + " u WHERE u.email ='" + emailToCheck + "'";
 
         Session s = HibernateUtil.openSession();
         Query query = s.createQuery(q);
-//        query.setParameter("email", emailToCheck);
-     //   @SuppressWarnings("unchecked")
+
         List<User> users = query.list();
-        System.out.println("Список юзеров:\n" + users.toString());
         s.close();
 
-       /* System.out.println("\nЧтение записей таблицы");
-        String query = "select p from " + Person.class.getSimpleName() + " p";
+        return users.get(0).getId();
+    }
 
-        @SuppressWarnings("unchecked")
-        List<Person> list = (List<Person>)session.createQuery(query).list();
-        System.out.println(list);*/
+    public User checkAccount(String emailToCheck, String passToCheck) {
+        System.out.println("\nЧтение записей таблицы");
+        String q = "SELECT u FROM " + User.class.getSimpleName() + " u WHERE u.password ='" + passToCheck + "' " +
+                "and u.email ='" + emailToCheck + "'";
 
+        Session s = HibernateUtil.openSession();
+        Query query = s.createQuery(q);
 
-        //  Query query = getCurrentSession().createQuery(q);
-        //   query.setParameter("email", emailToCheck);
-        return users.size() > 0;
+        List<User> users = query.list();
+        s.close();
+
+        if (users.size() == 1) {
+            return users.get(0);
+        } else return null;
     }
 }

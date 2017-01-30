@@ -1,11 +1,14 @@
 package com.edmodo.viewController;
 
 import com.edmodo.model.User;
-import com.edmodo.modelController.RecordAbstact;
+
 import com.edmodo.modelController.UserRec;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import static com.edmodo.viewController.AccessContr.user;
+
 
 /**
  * Created by pc on 29.01.2017.
@@ -25,9 +28,9 @@ public class RegistrationContr extends ObjController {
     @FXML
     private Label regInfo;
 
-    User user;
+    private UserRec userRec;
 
-    public RegistrationContr() {
+      public RegistrationContr() {
         super();
     }
 
@@ -43,12 +46,14 @@ public class RegistrationContr extends ObjController {
     @FXML
     private void clickRegBtn() {
         regInfo.setText("");
-        UserRec userRec = new UserRec();
-        if (userRec.checkEmail(email.getText())) {
+        userRec = new UserRec();
+        if (userRec.checkEmail(email.getText()) > 0) {
             regInfo.setText("Данный email уже занят!");
         } else {
             user = new User(email.getText(), pass.getText(), name.getText(), surname.getText());
             userRec.addRecord(user);
+            super.getMain().showTradeForm();
+
         }
 
 

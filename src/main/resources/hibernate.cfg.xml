@@ -18,5 +18,6 @@
 
         <!--Классы которые являются модельными-->
         <mapping class="com.edmodo.model.User"/>
+        <mapping class="com.edmodo.model.Item"/>
     </session-factory>
 </hibernate-configuration>

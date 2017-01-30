@@ -1,8 +1,7 @@
 package com.edmodo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by pc on 29.01.2017.
@@ -20,6 +19,8 @@ public class User extends BaseEntity {
     private String name;
     @Column
     private String surname;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Item> itemList;
 
     public User(String email, String password, String name, String surname) {
         this.email = email;
