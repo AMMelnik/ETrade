@@ -49,8 +49,12 @@ public class RegistrationContr extends ObjController {
         userRec = new UserRec();
         if (userRec.checkEmail(email.getText()) == 0) {
             user = new User(email.getText(), pass.getText(), name.getText(), surname.getText());
-            userRec.addRecord(user);
-            super.getMain().showTradeForm();
+            if (pass.getText().equals(passConfirm.getText())) {
+                userRec.addRecord(user);
+                super.getMain().showTradeForm();
+            } else {
+                regInfo.setText("Пароли не совпадают!");
+            }
         } else {
             regInfo.setText("Данный email уже занят!");
         }
