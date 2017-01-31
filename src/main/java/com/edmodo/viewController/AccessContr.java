@@ -33,7 +33,7 @@ public class AccessContr extends ObjController {
 
     @FXML
     void initialize() {
-        login.setText("Admin");
+        login.setText("zara@gmail.com");
         password.setText("12345");
     }
 

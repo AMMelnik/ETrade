@@ -1,5 +1,6 @@
 package com.edmodo.modelController;
 
+import com.edmodo.model.Bid;
 import com.edmodo.model.Item;
 import com.edmodo.model.User;
 import com.edmodo.util.HibernateUtil;
@@ -17,20 +18,21 @@ public class ItemRec extends RecordAbstact {
         super();
     }
 
-    public Item search(String itemSearch) {
-        System.out.println("\nЧтение записей таблицы");
-        String q = "SELECT i FROM " + Item.class.getSimpleName() + " i WHERE i.name LIKE '%" + itemSearch +
-                "%' or i.description LIKE '%" + itemSearch + "%' ";
+    public List<Item> search(String itemSearch) {
+        System.out.println("\nЧтение записей таблицы Item");
+
+        String q = "SELECT i FROM Bid as b, Item as i WHERE b.item != i.id " +
+                "and (i.name LIKE :itemSearch or i.description LIKE :itemSearch)";
 
         Session s = HibernateUtil.openSession();
-        Query query = s.createQuery(q);
+        Query query = s.createQuery(q).setParameter("itemSearch", "%" + itemSearch + "%")
+                .setParameter("itemSearch", "%" + itemSearch + "%");
 
         List<Item> items = query.list();
         s.close();
 
         if (items.size() > 0) {
-            return items.get(0);
+            return items;
         } else return null;
     }
-
 }

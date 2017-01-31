@@ -1,5 +1,7 @@
 package com.edmodo.modelController;
 
+import com.edmodo.model.Bid;
+import com.edmodo.model.Item;
 import com.edmodo.model.User;
 import com.edmodo.util.HibernateUtil;
 import org.hibernate.Query;
@@ -13,20 +15,15 @@ import java.util.List;
  */
 public class UserRec extends RecordAbstact {
 
-   /* public UserRec(User user) {
-        super(user);
-    }*/
-
     public UserRec() {
 
     }
 
     public int checkEmail(String emailToCheck) {
-        System.out.println("\nЧтение записей таблицы");
-        String q = "SELECT u FROM " + User.class.getSimpleName() + " u WHERE u.email ='" + emailToCheck + "'";
-
+        System.out.println("\nЧтение записей таблицы User");
+        String q = "SELECT u FROM User u WHERE u.email = :emailToCheck";
         Session s = HibernateUtil.openSession();
-        Query query = s.createQuery(q);
+        Query query = s.createQuery(q).setParameter("emailToCheck", emailToCheck);
 
         List<User> users = query.list();
         s.close();
@@ -35,12 +32,10 @@ public class UserRec extends RecordAbstact {
     }
 
     public User checkAccount(String emailToCheck, String passToCheck) {
-        System.out.println("\nЧтение записей таблицы");
-        String q = "SELECT u FROM " + User.class.getSimpleName() + " u WHERE u.password ='" + passToCheck + "' " +
-                "and u.email ='" + emailToCheck + "'";
-
+        System.out.println("\nЧтение записей таблицы User");
+        String q = "SELECT u FROM User u WHERE u.password = :passToCheck and u.email =:emailToCheck";
         Session s = HibernateUtil.openSession();
-        Query query = s.createQuery(q);
+        Query query = s.createQuery(q).setParameter("passToCheck", passToCheck).setParameter("emailToCheck", emailToCheck);
 
         List<User> users = query.list();
         s.close();

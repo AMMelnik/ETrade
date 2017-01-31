@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edmodo.viewController.TradeContr">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edmodo.viewController.TradeContr">
    <children>
       <Label fx:id="welcome" layoutX="478.0" layoutY="14.0" text="Здравствуйте, Антон!" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="10.0" />
       <Button fx:id="addItemBtn" layoutX="343.0" layoutY="224.0" minHeight="30.0" mnemonicParsing="false" onAction="#clickAddItemBth" text="Добавить товар" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="224.0" />
@@ -20,8 +20,8 @@
       </Label>
       <TableView fx:id="myItems" layoutX="24.0" layoutY="76.0" prefHeight="184.0" prefWidth="270.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0">
         <columns>
-          <TableColumn prefWidth="121.0" text="C1" />
-          <TableColumn prefWidth="147.0" text="C2" />
+          <TableColumn fx:id="myItemNameColumn" prefWidth="121.0" text="наименование" />
+          <TableColumn fx:id="myItemDescrColumn" prefWidth="147.0" text="описание" />
         </columns>
       </TableView>
       <Label layoutX="345.0" layoutY="45.0" text="Выставить новый товар на торги" AnchorPane.leftAnchor="345.0" AnchorPane.topAnchor="45.0">

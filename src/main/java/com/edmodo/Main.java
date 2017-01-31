@@ -1,6 +1,5 @@
 package com.edmodo;
 
-import com.edmodo.modelController.UserRec;
 import com.edmodo.viewController.ObjController;
 import com.edmodo.util.HibernateUtil;
 import javafx.application.Application;
@@ -25,7 +24,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("E-Trade v1.2.0");
         initRootLayout();
-        prepareToShow("/view/AccessView.fxml");
+        showAccessForm();
     }
 
     private void initRootLayout() {
@@ -54,6 +53,10 @@ public class Main extends Application {
         }
     }
 
+    public void showAccessForm() {
+        prepareToShow("/view/AccessView.fxml");
+    }
+
     public void showRegistrationForm() {
         prepareToShow("/view/RegistrationView.fxml");
     }
@@ -65,5 +68,12 @@ public class Main extends Application {
     public static void main(String[] args) {
         HibernateUtil.getSessionFactory();
         Application.launch(args);
+     /*   User user1 = new User("xxx@xxx.ru", "22222", "Miha", "Ivanov");
+        Item item1 = new Item("milk", "1L Milk Bottle", user1);
+        Bid bid1 = new Bid();
+        bid1.setUser(user1);
+        bid1.setItem(item1);
+        BidRec bidRec = new BidRec();
+        bidRec.addRecord(4, user1, item1 , bid1);*/
     }
 }

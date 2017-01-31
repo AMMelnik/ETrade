@@ -50,7 +50,7 @@ public class RegistrationContr extends ObjController {
         if (userRec.checkEmail(email.getText()) == 0) {
             user = new User(email.getText(), pass.getText(), name.getText(), surname.getText());
             if (pass.getText().equals(passConfirm.getText())) {
-                userRec.addRecord(user);
+                userRec.addRecord(1, user, null, null);
                 super.getMain().showTradeForm();
             } else {
                 regInfo.setText("Пароли не совпадают!");
@@ -58,14 +58,5 @@ public class RegistrationContr extends ObjController {
         } else {
             regInfo.setText("Данный email уже занят!");
         }
-
-       /* String nick = login.getText();
-        String pass = password.getText();
-        if (nick.equals("") && pass.equals("")) {
-            accessInfo.setText("Введите логин и пароль для доступа");
-        } else {
-            userDI.listUser.(nick, pass);
-            super.getMain().showWarriorsWindow();
-        }*/
     }
 }

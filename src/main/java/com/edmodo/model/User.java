@@ -19,8 +19,10 @@ public class User extends BaseEntity {
     private String name;
     @Column
     private String surname;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Item> itemList;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Bid bid;
 
     public User(String email, String password, String name, String surname) {
         this.email = email;
@@ -63,5 +65,21 @@ public class User extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
+    public Bid getBid() {
+        return bid;
+    }
+
+    public void setBid(Bid bid) {
+        this.bid = bid;
     }
 }
