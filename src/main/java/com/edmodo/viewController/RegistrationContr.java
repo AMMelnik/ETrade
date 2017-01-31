@@ -30,7 +30,7 @@ public class RegistrationContr extends ObjController {
 
     private UserRec userRec;
 
-      public RegistrationContr() {
+    public RegistrationContr() {
         super();
     }
 
@@ -47,17 +47,13 @@ public class RegistrationContr extends ObjController {
     private void clickRegBtn() {
         regInfo.setText("");
         userRec = new UserRec();
-        if (userRec.checkEmail(email.getText()) > 0) {
-            regInfo.setText("Данный email уже занят!");
-        } else {
+        if (userRec.checkEmail(email.getText()) == 0) {
             user = new User(email.getText(), pass.getText(), name.getText(), surname.getText());
             userRec.addRecord(user);
             super.getMain().showTradeForm();
-
+        } else {
+            regInfo.setText("Данный email уже занят!");
         }
-
-
-
 
        /* String nick = login.getText();
         String pass = password.getText();

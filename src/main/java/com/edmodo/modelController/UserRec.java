@@ -31,7 +31,7 @@ public class UserRec extends RecordAbstact {
         List<User> users = query.list();
         s.close();
 
-        return users.get(0).getId();
+        return users.size();
     }
 
     public User checkAccount(String emailToCheck, String passToCheck) {
