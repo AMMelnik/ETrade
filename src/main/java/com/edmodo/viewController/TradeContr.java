@@ -36,32 +36,35 @@ public class TradeContr extends ObjController {
     @FXML
     private TableView<Item> myItems;
     @FXML
-    private TableColumn<Item, Integer> idItemColumn;
+    private TableColumn<Item, String> myItemNameColumn;
+    @FXML
+    private TableColumn<Item, String> myItemDescrColumn;
     @FXML
     private TableColumn<Item, String> nameItemColumn;
     @FXML
     private TableColumn<Item, String> descrItemColumn;
     @FXML
-    private TableColumn<User, Integer> idUserColumn;
-    @FXML
     private TableView<Item> foundItems;
 
     private Item item;
-    private ItemRec itemRec;
+    private ItemRec itemRec = new ItemRec();
     private Bid bid;
-    private BidRec bidRec;
-    private ObservableList<Item> itemList = FXCollections.observableArrayList();
-
+    private BidRec bidRec = new BidRec();
+    private Item itemToBuy;
+    private ObservableList<Item> itemListObs = FXCollections.observableArrayList();
+    private ObservableList<Item> boughtListObs = FXCollections.observableArrayList();
 
     @FXML
     void initialize() {
         welcome.setText(" Здравствуйте, " + AccessContr.user.getName());
+        showUserItems();
+        foundItems.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> itemToBuy = newValue);
     }
 
     @FXML
     void clickAddItemBth() {
         info.setText("");
-        itemRec = new ItemRec();
         if (itemName.getText().isEmpty() || itemDescr.getText().isEmpty()) {
             info.setText("Укажите наименование и описание товара");
         } else {
@@ -73,21 +76,20 @@ public class TradeContr extends ObjController {
 
     @FXML
     void clickSearchBtn() {
-        itemList.removeAll();
+        itemListObs.removeAll();
         foundItems.getItems().clear();
         searchInfo.setText("");
-        itemRec = new ItemRec();
         if (itemSearch.getText().isEmpty()) {
             searchInfo.setText("Укажите наименование/описание");
         } else {
-            List<Item> selectedItems = itemRec.search(itemSearch.getText());
+            List<Item> selectedItems = itemRec.search(itemSearch.getText(), AccessContr.user.getId());
             if (selectedItems == null) {
                 searchInfo.setText("Товар не найден");
             } else {
-                itemList.addAll(selectedItems);
+                itemListObs.addAll(selectedItems);
                 nameItemColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
                 descrItemColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
-                foundItems.setItems(itemList);
+                foundItems.setItems(itemListObs);
             }
         }
     }
@@ -100,14 +102,22 @@ public class TradeContr extends ObjController {
 
     @FXML
     void clickBuyBtn() {
-        foundItems.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    Item itemToBuy = newValue;
-                    bid.setItem(itemToBuy);
-                    bid.setUser(AccessContr.user);
-                    bidRec.addRecord(3, null, null, bid);
-                    info.setText("Товар приобретен");
-                });
+        bid = new Bid();
+        bid.setItem(itemToBuy);
+        bid.setUser(AccessContr.user);
+        bidRec.addRecord(3, null, null, bid);
+        info.setText("Товар приобретен");
+    }
+
+    private void showUserItems() {
+        List<Item> boughtItems = itemRec.showMyItems(AccessContr.user.getId());
+        if (boughtItems != null) {
+            boughtListObs.addAll(boughtItems);
+            myItemNameColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+            myItemDescrColumn.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+            myItems.setItems(boughtListObs);
+        }
     }
 }
+
 
