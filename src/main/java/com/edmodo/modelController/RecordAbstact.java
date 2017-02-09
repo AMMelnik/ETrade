@@ -14,31 +14,43 @@ import javax.jws.soap.SOAPBinding;
  */
 public class RecordAbstact implements Recordable {
 
+    Session s = null;
+    Transaction tx = null;
+
     public RecordAbstact() {
 
     }
 
     @Override
     public void addRecord(int type, User user, Item item, Bid bid) {
-        Session s = HibernateUtil.openSession();
-        s.beginTransaction();
-        switch (type) {
-            case 1:
-                s.save(user);
-                break;
-            case 2:
-                s.save(item);
-                break;
-            case 3:
-                s.save(bid);
-                break;
-            case 4:
-                s.save(user);
-                s.save(item);
-                s.save(bid);
+        try {
+            s = HibernateUtil.openSession();
+            tx = s.beginTransaction();
+            switch (type) {
+                case 1:
+                    s.save(user);
+                    break;
+                case 2:
+                    s.save(item);
+                    break;
+                case 3:
+                    s.save(bid);
+                    break;
+                case 4:
+                    s.save(user);
+                    s.save(item);
+                    s.save(bid);
+            }
+            s.flush();
+            tx.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            tx.rollback();
+        } finally {
+            if (s != null) {
+                s.close();
+            }
         }
-        s.getTransaction().commit();
-        s.close();
     }
 
   /* @Override

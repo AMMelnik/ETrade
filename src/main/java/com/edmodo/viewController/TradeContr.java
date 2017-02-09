@@ -71,6 +71,8 @@ public class TradeContr extends ObjController {
             item = new Item(itemName.getText(), itemDescr.getText(), AccessContr.user);
             itemRec.addRecord(2, null, item, null);
             info.setText("Товар выставлен на торги");
+            itemName.setText("");
+            itemDescr.setText("");
         }
     }
 
@@ -110,6 +112,8 @@ public class TradeContr extends ObjController {
     }
 
     private void showUserItems() {
+        boughtListObs.removeAll();
+        myItems.getItems().clear();
         List<Item> boughtItems = itemRec.showMyItems(AccessContr.user.getId());
         if (boughtItems != null) {
             boughtListObs.addAll(boughtItems);
